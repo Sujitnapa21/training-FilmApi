@@ -202,4 +202,28 @@ public class FilmRepository {
         return resultList;
     }
 
+
+    public List<FilmModel> getOnly20Film(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(" select film_id, title, description, release_year, length, rating  ");
+        sb.append(" from film ");
+        sb.append(" where film_id < 20 ");
+
+        return this.jdbcTemplate.query(sb.toString(), new RowMapper<FilmModel>() {
+            @Override
+            public FilmModel mapRow(ResultSet resultSet, int i) throws SQLException {
+                FilmModel filmModel = new FilmModel();
+                filmModel.setFilmId(resultSet.getLong(1));
+                filmModel.setTitle(resultSet.getString(2));
+                filmModel.setDescription(resultSet.getString(3));
+                filmModel.setReleaseYear(resultSet.getString(4));
+                filmModel.setLength(resultSet.getString(5));
+                filmModel.setRating(resultSet.getString(6));
+
+                return filmModel;
+            }
+        });
+
+    }
+
 }
